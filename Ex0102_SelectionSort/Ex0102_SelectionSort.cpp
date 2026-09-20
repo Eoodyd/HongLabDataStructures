@@ -13,7 +13,13 @@ struct Element
 bool CheckSorted(int* arr, int size)
 {
 	// TODO: 정렬 확인 함수 구현
-
+	for (int a = 0; a < size-1; a++)
+	{
+		if (a > a + 1)
+		{
+			return false;
+		}
+	}
 	return true;
 }
 
@@ -47,12 +53,24 @@ int main()
 					int size = sizeof(arr) / sizeof(arr[0]);
 
 					for (int e = 0; e < size; e++) {
-						cout << arr[e] << " " << flush;
+						//cout << arr[e] << " " << flush;
 					}
 
-					cout << " -> " << flush;
+					//cout << " -> " << flush;
 
-					//TODO: 정렬 해보기
+					// 부등오 < 과 <= 헷갈리지 말기
+					for (int b = 0; b < size-1; b++)
+					{
+						for (int a = b + 1; a < size; a++)
+						{
+							if (arr[b] > arr[a])
+							{
+								swap(arr[b], arr[a]);
+							}
+						}
+					}
+
+					// 트럼프 카드 5개를 나열했을 때, 가장 작은 임시 값과 모든 요소 크기를 비교한 후에 정렬하는 방식도 있을 것
 
 					for (int e = 0; e < size; e++) {
 						cout << arr[e] << " " << flush;
@@ -63,56 +81,26 @@ int main()
 					cout << endl;
 				}
 	}
-
-	return 0; // <- 실습용 임시
-
-	// 5개라면? 더 많다면?
-	{
-		// 8 4 2 8 3
-		// TODO: ???
-
-		// 8 3 2 5 1 1 2 5 8 9
-		// TODO: ???
-
-		// 100개라면?
-	}
-
-	// 가장 작은 수 찾기
-	{
-		int arr[] = { 8, 3, 2, 5, 1, 1, 2, 5, 8, 9 }; // 임의의 숫자들, 변경 가능
-		int size = sizeof(arr) / sizeof(arr[0]);
-
-		assert(size > 0); // size가 1이상이라고 가정
-
-		// TODO:
-
-		// cout << "Minimum number is " << min_number << endl;
-	}
-
-	// 가장 작은 수의 인덱스 찾기
+		
+	// Selection Sort: (오름차순 예시)가장 작은 요소를 찾아 지정 위치와 스왑하는 것을 반복하여 정렬
 	{
 		int arr[] = { 8, 3, 2, 5, 1, 1, 2, 5, 8, 9 };
 		int size = sizeof(arr) / sizeof(arr[0]);
 
-		assert(size > 0); // size가 1이상이라고 가정
-
-		// TODO:
-
-		//cout << "The index of min is " << min_index << endl;
-		//cout << "Minimum number is " << arr[min_index] << endl;
-	}
-
-	// Selection Sort
-	// 힌트: swap()
-	{
-		int arr[] = { 8, 3, 2, 5, 1, 1, 2, 5, 8, 9 };
-		int size = sizeof(arr) / sizeof(arr[0]);
-
-		int min_index;
+		int min_index; // for문 내에서 정의한다면 계속 새로 생성해야함.
 		for (int i = 0; i < size - 1; i++)
 		{
-
 			// TODO:
+			min_index = i;
+			for (size_t j = i + 1; j < size; j++)
+			{
+				if (arr[min_index] > arr[j])
+				{
+					min_index = j;
+				}
+			}
+
+			swap(arr[i], arr[min_index]);
 
 			Print(arr, size);
 
@@ -125,16 +113,32 @@ int main()
 	// 비교 횟수 세보기, 더 효율적인 방법은 없을까?
 	// https://en.wikipedia.org/wiki/Sorting_algorithm
 	{
-		ofstream ofile("log.txt");
+		ofstream ofile("logEoodyd.txt");
 		for (int size = 1; size < 1000; size++)
 		{
 			int count = 0;
 			int* arr = new int[size];
-			for (int s = 0; s < size; s++) {
+			for (int s = 0; s < size; s++) 
+			{
 				arr[s] = size - s;
 			}
 
 			//TODO: count ++;
+			int min_index; 
+			for (size_t i = 0; i < size-1; i++)
+			{
+				min_index = i;
+				for (size_t j = i+1; j < size; j++)
+				{
+					count++;
+
+					if (arr[j] < arr[min_index])
+					{
+						min_index = j;
+					}
+				}
+				swap(arr[i], arr[min_index]);
+			}
 
 			//cout << size << ", " << count << endl;
 			ofile << size << ", " << count << endl;
@@ -149,7 +153,7 @@ int main()
 	// [2, 2, 1]
 	// [1, 2, 2] // 첫 2가 마지막으로 이동
 
-	// 안정성 확인(unstable)
+	// 안정성 확인(unstable): 같은 key 값끼리 정렬을 하지않고 위치가 기존 그대로 유지되면 stable 한 것.
 	{
 		Element arr[] = { {2, 'a'}, {2, 'b'}, {1, 'c'} };
 		int size = sizeof(arr) / sizeof(arr[0]);
