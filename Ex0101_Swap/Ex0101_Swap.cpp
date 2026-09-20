@@ -2,24 +2,20 @@
 
 using namespace std;
 
-/*
-int MySwapValue(int i, int j)
+void MySwapPtr(int* i, int* j) //int*: 포인터 변수를 의미
 {
-	// TODO:
-
-	return ? ;
+	int temp = *i; //*i: i의 주소가 가리키는 값
+	*i = *j;
+	*j = temp;
 }
 
-void MySwapPtr(int* i, int* j)
+void MySwapRef(int& i, int& j) //int&: 주소가 가리키는 곳의 값
 {
-	// TODO:
-}
+	int temp = i;
+	i = j; //그 변수 그 자체를 가져옴
+	j = temp;
 
-void MySwapRef(int& i, int& j)
-{
-	// TODO:
 }
-*/
 
 bool CheckSorted(int a, int b)
 {
@@ -32,11 +28,12 @@ int main()
 	{
 		int a = 3;
 		int b = 2;
-
+		
 		cout << a << " " << b << endl;
 
 		// TODO:
-
+		MySwapRef(a,b);
+		//MySwapPtr(&a ,&b ); //&a: a의 주소를 가져옴
 		cout << a << " " << b << endl;
 	}
 
@@ -46,7 +43,7 @@ int main()
 		int arr[] = { 9, 3 };
 
 		cout << arr[0] << " " << arr[1] << endl;
-
+		
 		// TODO:
 
 		cout << arr[0] << " " << arr[1] << endl;
