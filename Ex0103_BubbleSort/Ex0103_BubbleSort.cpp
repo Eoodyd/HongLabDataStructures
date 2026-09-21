@@ -22,16 +22,35 @@ void Print(int* arr, int size)
 
 int main()
 {
-	int arr[] = { 5, 1, 4, 2, 8 }; // 위키피디아 예시
-	// int arr[] = { 5, 4, 3, 2, 1 }; // Worst Case
-	// int arr[] = { 1, 2, 3, 5, 4 }; // Best Case
+	//int arr[] = { 5, 1, 4, 2, 8 }; // 위키피디아 예시
+	int arr[] = { 5, 4, 3, 2, 1 }; // Worst Case
+	//int arr[] = { 1, 2, 3, 5, 4 }; // Best Case
 	int n = sizeof(arr) / sizeof(arr[0]);
 
 	Print(arr, n);
 	cout << endl;
 
-	// Bubble Sort
+	// Bubble Sort: 버블소트는 이미 정렬되어 있는거 
 	{
+		for (size_t i = 0; i < n-1; i++)
+		{
+			bool swapped = false;
+			for (size_t j = 0; j < n - i-1; j++)
+			{
+				if (arr[j] > arr[j+1])
+				{
+					swap(arr[j], arr[j + 1]);
+					swapped = true;
+				}
+				Print(arr, n);
+			}
+
+			if (!swapped)
+			{
+				break;
+			}
+			
+		}
 		// 힌트: Print()로 진행상황 확인하면서 구현
 		// 힌트: 2중 for 루프
 		// 힌트: for 루프 범위 주의
