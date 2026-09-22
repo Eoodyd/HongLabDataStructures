@@ -25,44 +25,31 @@ int main()
 	// 오른쪽으로 하나씩 밀기 (삽입 정렬의 중간 단계)
 	{
 		//int arr[] = { 1, 2, 4, 5, 3, 6 };
-		int arr[] = { 1, 2, 3, 4, 5, 6 };
+		//int arr[] = { 1, 2, 3, 4, 5, 6 };
+		//int arr[] = { 8, 3, 2, 5, 1, 2 };
+		int arr[] = { 6, 5, 4, 3, 2, 1 }; // Worst
+		//int arr[] = { 1, 2, 3, 4, 5, 6 }; // Best
 		int n = sizeof(arr) / sizeof(arr[0]);
 		
 		Print(arr, n);
-
-		// i = 4인 경우에 대해서 구현
-		int i = 4;
 		
-		int index;
-		int value;
-		for (int i = 1; i < n; i++)
+		for (int i = 1; i < n; i++) //앞에꺼랑 비교하는 정렬이니까 최소 1
 		{
-			index = i;
-			value = arr[i];
-
-			for (int j = i - 1; j >= 0 ; j--)
-			{
-				Print(arr, n);
-
-				if (value < arr[j])
-				{
-					arr[j + 1] = arr[j];
-
-					index = j;
-
-				}
-				else break;
-
-			}
+			int j = i;
+			int key = arr[i]; // 아래에서 밀리면서 arr[i]가 변하기 때문에 미리 값 저장
 			
-			arr[index] = value;
+			for (; j > 0 && arr[j-1] > key; j--) // 조기종료를 위해 arr[j-1] > key 추가
+			{ 
+				arr[j] = arr[j-1]; //뒤로 밀기
+				Print(arr, n);
+			}
+
+			arr[j] = key; //뒤로 밀고 마지막 자리에 key 집어넣기
+			Print(arr, n);
+
 		}
 	}
 
-	//int arr[] = { 8, 3, 2, 5, 1, 2 };
-	//int arr[] = { 6, 5, 4, 3, 2, 1 }; // Worst
-	int arr[] = { 1, 2, 3, 4, 5, 6 }; // Best
-	int n = sizeof(arr) / sizeof(arr[0]);
-
+	
 	// Stability
 }
