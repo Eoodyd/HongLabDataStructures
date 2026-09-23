@@ -22,6 +22,16 @@ void RecurPermutations(char* arr, int left, int right)
 		// - right는 고정
 
 		// TODO:
+		// abc를 기준으로 마인드맵으로 가장 먼저 나오는 것들 순서 추려서 다시 배열 원상복구 시키는 법 보기.
+		for (int i = left; i < right; i++)
+		{
+			//
+
+			swap(arr[left], arr[i]);
+			RecurPermutations(arr, i+1, right);
+			swap(arr[i], arr[left]);
+
+		}
 	}
 }
 
@@ -50,18 +60,22 @@ int main()
 
 	// Permutations
 	char arr[] = "abcd";
-
+	
+	/*cout << "RecurPermutations(arr, 0, 0): " << endl;
 	RecurPermutations(arr, 0, 0);
 	cout << endl;
 
+	cout << "RecurPermutations(arr, 0, 1): " << endl;
 	RecurPermutations(arr, 0, 1);
-	cout << endl;
+	cout << endl;*/
 
+	cout << "RecurPermutations(arr, 0, 2): " << endl;
 	RecurPermutations(arr, 0, 2);
 	cout << endl;
 
-	// RecurPermutations(arr, 0, 3);
-	// cout << endl;
+	/*cout << "RecurPermutations(arr, 0, 3): " << endl;
+	RecurPermutations(arr, 0, 3);
+	cout << endl;*/
 
 	return 0;
 }

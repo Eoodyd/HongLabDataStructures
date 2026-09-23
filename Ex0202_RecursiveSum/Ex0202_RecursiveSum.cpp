@@ -22,8 +22,8 @@ int RecurSum(int* arr, int n)
 	= ((1 + 2 + ... 8) + 9) + 10
 	= ...
 	*/
-
-	return 0; // <- TODO: 
+	if (--n < 0) return 0;
+	return arr[n] + RecurSum(arr, n);
 }
 
 int main()
