@@ -4,7 +4,7 @@
 #include <algorithm> // swap
 #include <cassert>
 
-// Abstract Data Type 개념 소개
+// Abstract Data Type(추상자료형) 개념 소개
 // 보충: 원래 ADT는 특정 언어에 종속되는 개념은 아닙니다.
 
 /* Horowitz 교재

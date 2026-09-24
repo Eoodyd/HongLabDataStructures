@@ -21,15 +21,13 @@ void RecurPermutations(char* arr, int left, int right)
 		// - 같은 변수끼리도 swap() 가능
 		// - right는 고정
 
-		// TODO:
+		// TODO: 4321
 		// abc를 기준으로 마인드맵으로 가장 먼저 나오는 것들 순서 추려서 다시 배열 원상복구 시키는 법 보기.
-		for (int i = left; i < right; i++)
+		for (int i = left; i <= right; i++)
 		{
-			//
-
 			swap(arr[left], arr[i]);
-			RecurPermutations(arr, i+1, right);
-			swap(arr[i], arr[left]);
+			RecurPermutations(arr, left + 1, right); // i+1이 아님. 앞에꺼 픽스하고 옮겨서 진행
+			swap(arr[left], arr[i]);
 
 		}
 	}
@@ -73,9 +71,9 @@ int main()
 	RecurPermutations(arr, 0, 2);
 	cout << endl;
 
-	/*cout << "RecurPermutations(arr, 0, 3): " << endl;
+	cout << "RecurPermutations(arr, 0, 3): " << endl;
 	RecurPermutations(arr, 0, 3);
-	cout << endl;*/
+	cout << endl;
 
 	return 0;
 }
