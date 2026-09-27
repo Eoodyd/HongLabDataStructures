@@ -31,5 +31,5 @@ public:
 private:
 	Term* terms_ = nullptr;
 	int capacity_ = 0;
-	int num_terms_ = 0;
+	int num_terms_ = 0; //실제로 계수가 들어있는 항 개수
 };

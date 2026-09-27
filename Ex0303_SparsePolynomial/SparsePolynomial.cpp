@@ -39,6 +39,10 @@ float SparsePolynomial::Eval(float x)
 	float temp = 0.0f;
 
 	// TODO:
+	for (int i = 0; i < num_terms_; i++)
+	{
+		temp += terms_[i].coef * powf(x, terms_[i].exp);
+	}
 
 	return temp;
 }
@@ -54,9 +58,43 @@ SparsePolynomial SparsePolynomial::Add(const SparsePolynomial& poly)
 	// - 3. 더하면서 Polynomial에 업데이트 한다. 구조가 고정되어 있어서 쉽다.
 	// - 4. Polynomial을 SparsePolynomial로 변환한다.
 
+	
+	int finalExp = 0;
+
+	for (int i = 0; i < num_terms_; i++)
+	{
+		if (terms_[i].exp > finalExp)
+		{
+			finalExp = terms_[i].exp;
+		}
+	}
+	for (int i = 0; i < poly.num_terms_; i++)
+	{
+		if (poly.terms_[i].exp > finalExp)
+		{
+			finalExp = poly.terms_[i].exp;
+		}
+	}
+
+	float* tempPolynomial = new float[finalExp + 1] ();
+	
+	for (int i = 0; i < num_terms_; i++)
+	{
+		tempPolynomial[terms_[i].exp] = terms_[i].coef;
+	}
+	for (int i = 0; i < poly.num_terms_; i++)
+	{
+		tempPolynomial[poly.terms_[i].exp] += poly.terms_[i].coef;
+	}
+
 	SparsePolynomial temp;
 
-	// TODO:
+	for (int i = 0; i < finalExp+1; i++)
+	{
+		if (tempPolynomial[i] == 0.0f) continue;
+		
+		temp.NewTerm(tempPolynomial[i],i);
+	}
 
 	return temp;
 }
