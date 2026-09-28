@@ -97,6 +97,10 @@ SparsePolynomial SparsePolynomial::Add(const SparsePolynomial& poly)
 	}
 
 	return temp;
+
+	//다른방법
+	//while문에서 this랑 poly의 차수를 비교하면서 순차적으로 전진하면서 새로운 SparsePolynomial에 newterm을 해줌. 
+	//this와 poly 같은 차수라면 합해서 newterm을 해주고, 같이 가지지 않는 차수라면 그것만 newterm 해주기
 }
 
 void SparsePolynomial::Print()
