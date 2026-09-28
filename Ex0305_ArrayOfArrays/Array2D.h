@@ -26,7 +26,7 @@ private:
 	// 연속되는 12개 메모리공간을 얻어야 하는데 여유치 않는 상황을 가정
 	// 그렇다면 연속된 4개의 메모리공간을 3개 받으면 되겠지
 	
-	//`float*`은 float 배열의 주소 *arrays_ 라고 생각하셈
+	//`float*`은 주소를 가리키잖아? `float*` 타입 변수의 주소를 담는다고 생각하기.
 	float** arrays_ = nullptr; 
 	int num_rows_ = 0;
 	int num_cols_ = 0;

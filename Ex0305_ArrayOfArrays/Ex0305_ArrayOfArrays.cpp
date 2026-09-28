@@ -20,12 +20,12 @@ int main()
 
 	m1.Print();
 
-	cout << endl;
+	cout << "m1.Add(m1): " << endl;
 
 	Array2D add = m1.Add(m1); // 자기 자신과 더하기
 	add.Print();
 
-	cout << endl;
+	cout << "m1.Transpose(): " << endl;
 
 	Array2D tr = m1.Transpose(); // 전치행렬
 	tr.Print();
