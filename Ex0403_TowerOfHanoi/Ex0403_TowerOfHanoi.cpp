@@ -20,6 +20,7 @@ void PrintTowers()
 // 실제로 디스크를 움직여서 스택들을 업데이트
 void MoveDisk(int from, int to)
 {
+
 	if (tower[from].IsEmpty())
 	{
 		cout << "Tower " << from << " is empty." << endl;
@@ -45,7 +46,12 @@ void MoveDisk(int from, int to)
 
 void RecurMoveDisks(int n, int from, int temp, int to)
 {
-	// TODO:
+	// TODO: 
+	if (n == 0)return;
+
+	RecurMoveDisks(n-1, from, to, temp);
+	MoveDisk(from, to);
+	RecurMoveDisks(n-1, temp, from, to);
 }
 
 int main()

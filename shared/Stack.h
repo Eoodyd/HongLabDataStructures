@@ -29,12 +29,14 @@ public:
 
 	bool IsEmpty() const
 	{
-		return false; // TODO:
+		// TODO:
+		return top_ == -1 ; 
 	}
 
 	int Size() const
 	{
-		return 0; //TODO:
+		//TODO:
+		return top_ + 1; 
 	}
 
 	void Print()
@@ -58,16 +60,20 @@ public:
 	void Push(const T& item)
 	{
 		// TODO: 필요하면 리사이즈 
+		if (capacity_ == top_ + 1) Resize(capacity_ * 2);
 
 		// TODO:
+		top_++;
+		stack_[top_] = item;
 	}
 
 	// Delete the TOP element of the stack
 	void Pop()
 	{
 		assert(!IsEmpty());
-
-		// TODO:
+		
+		// TODO: 탑말고는 조회 불가능해서 top_보다 위에꺼 지울 필요 없음
+		top_--;
 	}
 
 protected: // 뒤에서 상속해서 사용

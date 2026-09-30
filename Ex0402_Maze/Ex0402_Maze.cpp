@@ -44,31 +44,54 @@ struct Pos
 	}
 };
 
-void RecurMaze(Pos p)
+//void RecurMaze(Pos p)
+//{
+//	const char mark = maze[p.row][p.col];
+//
+//	if (mark == 'G')
+//	{
+//		cout << "Found!" << endl;
+//		return;
+//	}
+//
+//	// TODO: 
+//	if (mark != 'X' && mark != '1')
+//	{
+//		maze[p.row][p.col] = 'X';
+//
+//		RecurMaze({ p.row + 1, p.col });
+//		RecurMaze({ p.row - 1, p.col });
+//		RecurMaze({ p.row, p.col + 1 });
+//		RecurMaze({ p.row, p.col - 1 });
+//	}
+//}
+
+//조기 종료가 가능한 버전
+int RecurMaze(Pos p)
 {
+	// TODO:
 	const char mark = maze[p.row][p.col];
 
 	if (mark == 'G')
 	{
 		cout << "Found!" << endl;
-		return;
+		return 1;
 	}
 
-	// 방문했던 적이 없고 ('X'가 아니고)
-	// 벽도 아닌 경우 ('1'도 아닌 경우)
-	// if (...)
-	//{
-		// 'X' 표시
+	if (mark != 'X' && mark != '1')
+	{
+		maze[p.row][p.col] = 'X';
 
-		// 옆으로 이동
-	//}
+		// {+1,0} > {-1,0} > {0,+1} > {0,-1} 순서로 호출됨
+		// 만약 G를 찾아버리면 다음 순서 호출없이 return 1을 호출하기 때문에 조기종료
+		if(RecurMaze({ p.row + 1, p.col })) return 1;
+		if(RecurMaze({ p.row - 1, p.col })) return 1;
+		if(RecurMaze({ p.row, p.col + 1 })) return 1;
+		if(RecurMaze({ p.row, p.col - 1 })) return 1;
+	}
+
+	return 0;
 }
-
-//조기 종료가 가능한 버전
-//int RecurMaze(Pos p)
-//{
-//	// TODO:
-//}
 
 void StackMaze()
 {
@@ -99,6 +122,16 @@ void StackMaze()
 		}
 
 		// TODO:
+		// 뒤늦게 본인이 'X' / '1'인지 검사
+		if (mark != 'X' && mark != '1')
+		{
+			maze[p.row][p.col] = 'X';
+			// 스택에 검사 없이 한번에 push
+			s.Push({ p.row + 1, p.col });
+			s.Push({ p.row - 1, p.col });
+			s.Push({ p.row, p.col + 1 });
+			s.Push({ p.row, p.col - 1 });
+		}
 	}
 }
 
@@ -106,9 +139,9 @@ int main()
 {
 	PrintMaze();
 
-	//RecurMaze({ 1, 1 });
+	RecurMaze({ 1, 1 });
 
-	StackMaze();
+	//StackMaze();
 
 	PrintMaze();
 

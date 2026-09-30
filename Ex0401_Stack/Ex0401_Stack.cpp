@@ -52,16 +52,26 @@ int main()
 
 	// 문자열 순서 뒤집어서 출력하기 (스택 사용하기 연습)
 	{
-		//const char str[] = "Hello, World!";
-		//const int size = sizeof(str) - 1; // 마지막 '\0' 제외
+		const char str[] = "Hello, World!";
+		const int size = sizeof(str) - 1; // 마지막 '\0' 제외
 
-		//cout << "Input: " << str << endl;
+		cout << "Input: " << str << endl;
 
-		//Stack<char> stack;
+		Stack<char> stack;
 
-		//// TODO:
+		// TODO:
+		for (int i = 0; i < size; i++)
+		{
+			stack.Push(str[i]);
+		}
 
-		//cout << endl;
+		for (int i = 0; i < size; i++)
+		{
+			cout << stack.Top();
+			stack.Pop();
+		}
+
+		cout << endl;
 	}
 
 	return 0;
