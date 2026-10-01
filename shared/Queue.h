@@ -49,23 +49,13 @@ public:
 
 	int Size() const
 	{
+		// TODO:
 		// 하나하나 세는 방법 보다는 경우를 따져서 바로 계산하는 것이 빠릅니다.
 
-		// if-else-if-else로 구현하는 경우
-		//if (...)
-		//	return ...;
-		//else if (...)
-		//	return ...;
-		//else
-		//	return 0;
-
-		// 또는 if-else 하나로도 구현 가능합니다.
-		// if (...)
-		//	  return ...;
-		// else
-		//    return ...;
-
-		return 0; // TODO: 임시
+		 if (front_ <= rear_)
+			return rear_ - front_;
+		 else
+		    return capacity_ - front_ + rear_;
 	}
 
 	void Resize() // 2배씩 증가
@@ -79,6 +69,37 @@ public:
 
 		// TODO: 하나하나 복사하는 방식은 쉽게 구현할 수 있습니다. 
 		//       (도전) 경우를 나눠서 memcpy()로 블럭 단위로 복사하면 더 효율적입니다.
+
+		//Resize()는 공간이 없을 때 진행
+		//TODO:
+		T* tempQueue = new T[capacity_ * 2]();
+
+		//더 좋은 방법으로는 나머지 연산으로 for문 하나만 만들어도 됨(if 문 제거)
+		if (front_ <= rear_)
+		{
+			for (int i = 0; i < capacity_; i++)
+			{
+				tempQueue[i] = this->queue_[i];
+			}
+		}
+		else
+		{
+			for (int i = front_; i < capacity_; i++)
+			{
+				tempQueue[i-front_] = queue_[i];
+			}
+			for (int i = 0; i <= rear_; i++)
+			{
+				tempQueue[capacity_ - front_ + i] = queue_[i];
+			}
+		}
+
+		delete[] queue_;
+		queue_ = tempQueue;
+		rear_ = capacity_-1;
+		front_ = 0;
+		capacity_ *= 2;
+
 	}
 
 	void Enqueue(const T& item) // 맨 뒤에 추가, Push()
@@ -86,7 +107,11 @@ public:
 		if (IsFull())
 			Resize();
 
-		// TODO:
+		// TODO: 
+		if (capacity_ - 1 == rear_) rear_ = 0; //% 연산자로 더 쉽게
+		else rear_++;
+
+		queue_[rear_] = item;
 	}
 
 	void Dequeue() // 큐의 첫 요소 삭제, Pop()
@@ -94,6 +119,10 @@ public:
 		assert(!IsEmpty());
 
 		// TODO: 
+		if (capacity_ - 1 == front_) front_ = 0; //% 연산자로 더 쉽게
+		else front_++;  
+
+		queue_[front_] = 0;
 	}
 
 	void Print()

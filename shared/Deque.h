@@ -35,6 +35,9 @@ public:
 			Base::Resize();
 
 		// TODO:
+		Base::queue_[Base::front_] = item;
+		Base::front_ = (Base::front_ == 0) ? Base::capacity_ - 1: Base::front_ - 1;
+		//Base::front_ = (Base::front_ - 1 + Base::capacity_) % Base::capacity_;
 	}
 
 	void PushBack(const T& item)
@@ -52,8 +55,12 @@ public:
 		assert(!Base::IsEmpty());
 
 		// TODO:
+		
+		Base::queue_[Base::rear_] = 0;
+		Base::rear_ = (Base::rear_ == 0) ? Base::capacity_ - 1 : Base::rear_ - 1;
 	}
 
 private:
 	// Queue와 동일
+	//int& rear_ = Base::rear_; // 이런 방식으로 변수를 연결해 Base::를 제거하는 방법도 잇음.
 };
