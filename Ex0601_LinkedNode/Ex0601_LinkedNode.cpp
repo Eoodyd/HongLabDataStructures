@@ -9,19 +9,30 @@ struct Node
 
 	friend ostream& operator<<(ostream& os, const Node& n)
 	{
-		cout << n.item << " " << flush;
-		return os;
+		cout << "[" << &n << ", " << n.item << ", " << n.next<< "]" << flush;
+		return  os;
 	}
 };
 
 void RecurPrint(Node* node)
 {
-	// TODO:
+	// TODO: 재귀
+
+	if (node->next == nullptr) return;
+	cout << *node << endl;
+	RecurPrint(node->next);
 }
 
 void IterPrint(Node* node)
 {
 	// TODO:
+	Node* temp = node;
+
+	while (temp->next != nullptr) //next가 nullptr 까지
+	{
+		cout << *temp << endl;
+		temp = temp->next;
+	}
 }
 
 int main()
@@ -65,35 +76,43 @@ int main()
 	// 연결 관계 만들어 주기
 	// first->next = second;
 	// TODO:
+	first->next = second;
+	second->next = third;
+	third->next = fourth;
+	fourth->next = fifth;
+
 	// 마지막
 
-	//cout << *(first) << endl;
-	//cout << *(first->next) << endl;
-	//cout << *(first->next->next) << endl;
-	//cout << *(first->next->next->next) << endl;
-	//cout << *(first->next->next->next->next) << endl;
-	//// cout << *(first->next->next->next->next->next) << endl; // 오류
+	cout << *(first) << endl;
+	cout << *(first->next) << endl;
+	cout << *(first->next->next) << endl;
+	cout << *(first->next->next->next) << endl;
+	cout << *(first->next->next->next->next) << endl;
+	// cout << *(first->next->next->next->next->next) << endl; // 오류
 
 	cout << endl;
 
-	// 임시 변수 사용
-	//{
-	//	Node* current = first;
-	//	cout << *current << endl;
-
-	// TODO:
-	//	cout << endl;
-	//}
-
 	// 재귀 호출 이용
-	//RecurPrint(first);
-	//cout << endl;
+	RecurPrint(first);
+	cout << endl;
 
 	// 반복문 이용
-	//IterPrint(first);
-	//cout << endl;
+	IterPrint(first);
+	cout << endl;
 
 	// TODO: 데이터 삭제
+	Node* current = first;
+
+	while (current)
+	{
+		Node* temp = current;
+		
+		cout << "delete: " << *temp << endl;
+
+		current = current->next;
+		
+		delete temp;
+	}
 
 	return 0;
 }

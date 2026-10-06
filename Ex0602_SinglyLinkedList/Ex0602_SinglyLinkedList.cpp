@@ -10,11 +10,11 @@ int main()
 
 	list.SetPrintDebug(false);
 
-	list.PushFront(3);
-	list.PushBack(4);
-	list.PushFront(2);
-	list.PushFront(1);
-	list.PushBack(5);
+	list.PushFront(3);	//3
+	list.PushBack(4);	//34
+	list.PushFront(2);	//234
+	list.PushFront(1);	//1234
+	list.PushBack(5);	//12345
 
 	list.Print();
 
@@ -40,8 +40,8 @@ int main()
 	// PopFront()/Back() 테스트
 	for (int i = 0; i < 5; i++)
 	{
-		//list.PopFront();
-		//list.Print();
+		list.PopFront();
+		list.Print();
 
 		list.PopBack();
 		list.Print();

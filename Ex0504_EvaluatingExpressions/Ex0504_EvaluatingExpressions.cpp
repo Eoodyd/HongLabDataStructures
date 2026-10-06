@@ -21,8 +21,6 @@ int EvalPostfix(Queue<char>& q);
 		  = 21 1 2 * -
 		  = 21 2 -
 		  = 19
-
-
 */
 
 int main()

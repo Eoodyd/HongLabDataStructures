@@ -20,6 +20,13 @@ public:
 	SinglyLinkedList(const SinglyLinkedList& list)
 	{
 		// TODO: 연결 리스트 복사
+
+		Node* temp = list.first_;
+		while (temp)
+		{
+			PushBack(temp->item);
+			temp = temp->next;
+		}
 	}
 
 	~SinglyLinkedList()
@@ -43,6 +50,15 @@ public:
 
 		// TODO: size를 하나하나 세어서 반환
 
+		Node* temp = first_;
+		return 1;
+
+		while (temp)
+		{
+			size++;
+			temp = temp->next;
+		}
+
 		return size;
 	}
 
@@ -50,26 +66,43 @@ public:
 	{
 		assert(first_);
 
-		return T(); // TODO: 수정
+		return first_->item; // TODO: 수정
 	}
 
 	T Back()
 	{
 		assert(first_);
 
-		return T(); // TODO: 수정
+		Node* temp = first_;
+		
+		while (temp->next)
+		{
+			temp = temp->next;
+		}
+
+		return temp->item; // TODO:
 	}
 
 	Node* Find(T item)
 	{
 		// TODO: item이 동일한 노드 포인터 반환
 
+		Node* temp = first_;
+		while (temp)
+		{
+			if (temp->item == item) return temp;
+			temp = temp->next;
+		}
 		return nullptr;
 	}
 
 	void InsertBack(Node* node, T item)
 	{
 		// TODO:
+		Node* temp = new Node;
+		temp->item = item;
+		temp->next = node->next;
+		node->next = temp;
 	}
 
 	void Remove(Node* n)
@@ -78,6 +111,31 @@ public:
 
 		// 하나 앞의 노드를 찾아야 합니다.
 		// TODO:
+		// 대원TODO: 좀더 간단하게 코드 구현하기
+		Node* prev = nullptr;
+		Node* current = first_;
+
+		while (current)
+		{
+			if (n == current)
+			{
+				break;
+			}
+			
+			prev = current;
+			current = current->next;
+		}
+
+		if (prev)
+		{
+			prev->next = current->next;
+		}
+		else 
+		{
+			first_ = current->next;
+		}
+
+		delete n;
 	}
 
 	void PushFront(T item)
@@ -86,20 +144,37 @@ public:
 
 		// 새로운 노드 만들기
 		// TODO:
-
+		Node* temp = new Node;
+		temp->item = item;
+		
 		// 연결 관계 정리
 		// TODO:
+		temp->next = first_; //first_는 nullptr 또는 주소가 들어있을테지
+		first_ = temp;
 	}
 
 	void PushBack(T item)
 	{
+		Node* itemNode = new Node;
+		itemNode->item = item;
+		itemNode->next = nullptr;
+
 		if (first_)
 		{
 			// TODO:
+			Node* temp = first_;
+
+			while (temp->next)
+			{
+				temp = temp->next;
+			}
+
+			temp->next = itemNode;
 		}
-		else
+		else //첫 요소일 경우
 		{
 			// TODO:
+			first_ = itemNode;
 		}
 	}
 
@@ -115,6 +190,10 @@ public:
 		assert(first_);
 
 		// TODO: 메모리 삭제
+		Node* temp = first_;
+		first_ = first_->next;
+		
+		delete temp;
 	}
 
 	void PopBack()
@@ -131,11 +210,45 @@ public:
 		assert(first_);
 
 		// TODO: 메모리 삭제
+		//대원TODO: 강의에서 ㄴ요소가 first_ 뿐일 때를 분리하더라. 좀 더 간단하게
+
+		Node* temp = first_;
+		Node* prev = nullptr;
+		while (temp->next)
+		{
+			prev = temp;
+			temp = temp->next;
+		}
+		
+		if (prev)
+		{
+			prev->next = nullptr;
+		}
+		else
+		{
+			first_ = nullptr;
+		}
+
+		delete temp;
 	}
 
 	void Reverse()
 	{
 		// TODO: 
+		// 처음 것이 nullptr을 가리키고 마지막 것이 first_가 가리킴 받아야 함.
+		
+		Node* prev = nullptr;
+		Node* current = first_;
+
+		while (current) //임시저장, 이전 주소 쪽으로 next 연결, prev, current 옮기기
+		{
+			Node* next = current->next;
+			current->next = prev;
+			prev = current;
+			current = next;
+		}
+
+		first_ = prev;
 	}
 
 	void SetPrintDebug(bool flag)
