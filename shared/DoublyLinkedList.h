@@ -30,11 +30,15 @@ public:
 	void Clear() // 모두 지워야(delete) 합니다.
 	{
 		// TODO:
+		while (first_)
+		{
+			PopFront();
+		}
 	}
 
 	bool IsEmpty()
 	{
-		return true; // TODO:
+		return first_ == nullptr; // TODO:
 	}
 
 	int Size()
@@ -42,6 +46,12 @@ public:
 		int size = 0;
 
 		// TODO:
+		Node* temp = first_;
+		while (temp)
+		{
+			size++;
+			temp = temp->right;
+		}
 
 		return size;
 	}
@@ -60,16 +70,36 @@ public:
 
 			cout << " Forward: ";
 			// TODO:
-			cout << endl;
-
+			while (current->right)
+			{
+				cout << current->item << " ";
+				current = current->right;
+			}
+			cout << current->item << endl;
+			
 			cout << "Backward: ";
-			// TODO:
-			cout << endl;
+			while (current->left)
+			{
+				cout << current->item << " ";
+				current = current->left;
+			}
+			cout << current->item << endl;
 		}
 	}
 
 	Node* Find(T item)
 	{
+		Node* temp = first_;
+		while (temp)
+		{
+			if (temp->item == item)
+			{
+				return temp;
+			}
+
+			temp = temp->right;
+		}
+
 		return nullptr; // TODO:
 	}
 
@@ -81,18 +111,58 @@ public:
 		}
 		else
 		{
-			// TODO:
+			// TODO: while이 필요없음
+
+			Node* temp = new Node;
+			temp->item = item;
+
+			temp->right = node->right;
+			node->right = temp;
+
+			if (temp->right)
+			{
+				temp->right->left = temp;
+			}
+
+			temp->left = node;
 		}
 	}
 
 	void PushFront(T item)
 	{
 		// TODO:
+		Node* temp = new Node;
+		temp->item = item;
+		temp->right = first_;
+		temp->left = nullptr;
+		
+		if(first_)first_->left = temp;
+		first_ = temp;
 	}
 
 	void PushBack(T item)
 	{
 		// TODO:
+		Node* newNode = new Node;
+		newNode->item = item;
+		newNode->right = nullptr;
+		newNode->left = nullptr;
+
+		if (!first_)
+		{
+			first_ = newNode;
+			return;
+		}
+
+		Node* temp = first_;
+
+		while (temp->right)
+		{
+			temp = temp->right;
+		}
+
+		temp->right = newNode;
+		newNode->left = temp;
 	}
 
 	void PopFront()
@@ -107,6 +177,15 @@ public:
 		assert(first_);
 
 		// TODO:
+		Node* temp = first_->right;
+		
+		delete first_;
+
+		if (temp)
+		{
+			first_ = temp;
+			temp->left = nullptr;
+		}
 	}
 
 	void PopBack()
@@ -123,25 +202,74 @@ public:
 		assert(first_);
 
 		// TODO:
+		Node* temp = first_;
+
+		while (temp->right)
+		{
+			temp = temp->right;
+		}
+
+		if (temp->left) temp->left->right = nullptr;
+		else first_ = nullptr;
+		delete temp;
 	}
 
 	void Reverse()
 	{
 		// TODO:
+		//if (!first_) return;
+
+		//Node* current = first_;
+		//Node* next = nullptr;
+
+		//while (current)
+		//{
+		//	Node* next = current->right;
+		//	current->right = current->left;
+		//	current->left = next; 
+
+
+		//	//1 2 3 4 5
+		//	//        5 4 3 2 1
+		//	if (!next) first_ = current;
+		//	current = next;
+		//}
+
+		if (IsEmpty()) return;
+		else
+		{
+			Node* current = first_;
+			Node* prev = nullptr;
+
+			while (current)
+			{
+				prev = current;
+				current = current->right;
+				std::swap(prev->left, prev->right); // 두 변수가 들고 있는 주소 값이 바뀜.
+			}
+
+			first_ = prev;
+		}
 	}
 
 	T Front()
 	{
 		assert(first_);
 
-		return T(); // TODO:
+		return first_->item; // TODO:
 	}
 
 	T Back()
 	{
 		assert(first_);
 
-		return T(); // TODO:
+		Node* temp = first_;
+		while (temp->right)
+		{
+			temp = temp->right;
+		}
+
+		return temp->item; // TODO:
 	}
 
 protected:

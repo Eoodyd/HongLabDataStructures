@@ -37,6 +37,13 @@ public:
 	void Clear() // 모두 지워야(delete) 합니다.
 	{
 		// TODO: 모두 삭제
+		Node* temp = first_;
+		while (temp)
+		{
+			Node* next = temp->next;
+			delete temp;
+			temp = next;
+		}
 	}
 
 	bool IsEmpty()
@@ -108,34 +115,28 @@ public:
 	void Remove(Node* n)
 	{
 		assert(first_);
+		
+		//TODO
+		if (first_ == n)
+		{
+			first_ = first_->next;
+			delete n;
+			return;
+		}
 
 		// 하나 앞의 노드를 찾아야 합니다.
-		// TODO:
-		// 대원TODO: 좀더 간단하게 코드 구현하기
-		Node* prev = nullptr;
-		Node* current = first_;
+		// TODO: 
+		Node* temp = first_;
 
-		while (current)
+		while (temp->next)
 		{
-			if (n == current)
+			if (temp->next == n)
 			{
-				break;
+				temp->next = temp->next->next;
+				delete n;
 			}
-			
-			prev = current;
-			current = current->next;
+			temp = temp->next;
 		}
-
-		if (prev)
-		{
-			prev->next = current->next;
-		}
-		else 
-		{
-			first_ = current->next;
-		}
-
-		delete n;
 	}
 
 	void PushFront(T item)
@@ -210,7 +211,6 @@ public:
 		assert(first_);
 
 		// TODO: 메모리 삭제
-		//대원TODO: 강의에서 ㄴ요소가 first_ 뿐일 때를 분리하더라. 좀 더 간단하게
 
 		Node* temp = first_;
 		Node* prev = nullptr;
@@ -283,7 +283,7 @@ public:
 				{
 					cout << current->item;
 				}
-
+				
 				if (current->next)
 					cout << " -> ";
 				else

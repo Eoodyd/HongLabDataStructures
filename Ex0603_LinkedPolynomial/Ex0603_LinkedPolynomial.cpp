@@ -1,4 +1,5 @@
 ﻿#include <iostream>
+#include <string>
 #include "../shared/SinglyLinkedList.h"
 
 using namespace std;
@@ -17,6 +18,29 @@ public:
 	void NewTerm(float coef, int exp)
 	{
 		// TODO:
+		Term term = { coef,  exp };
+		PushBack(term);
+
+		//Node* temp = first_;
+		//while (temp)
+		//{	
+		//	//같은 차수 있으면 계수 합치기
+		//	if (temp->item.exp == exp)
+		//	{
+		//		temp->item.coef += coef;
+		//		return;
+		//	}
+		//	temp = temp->next;
+		//}
+
+		////같은 차수 없으면 PushBack
+		//Node* newNode = new Node;
+		//newNode->item.coef = coef;
+		//newNode->item.exp = exp;
+		//
+		//PushBack(newNode->item);
+
+		//delete newNode;
 	}
 
 	float Eval(float x)
@@ -24,6 +48,12 @@ public:
 		float temp = 0.0f;
 
 		// TODO:
+		Node* tempNode = first_;
+		while (tempNode)
+		{
+			temp += powf(x, tempNode->item.exp) * tempNode->item.coef;
+			tempNode = tempNode->next;
+		}
 
 		return temp;
 	}
@@ -35,10 +65,33 @@ public:
 
 		LinkedPolynomial temp;
 
-		Node* i = this->first_;
-		Node* j = poly.first_;
+		Node* thisNode = this->first_;
+		Node* polyNode = poly.first_;
 
 		// TODO:
+		while (thisNode || polyNode)
+		{
+			int thisNodeExp = thisNode == nullptr ? INT_MAX : thisNode->item.exp;
+			int polyNodeExp = polyNode == nullptr ? INT_MAX : polyNode->item.exp;
+			
+			if (thisNodeExp == polyNodeExp)
+			{
+				temp.NewTerm(thisNode->item.coef + polyNode->item.coef, thisNodeExp);
+
+				thisNode = thisNode->next;
+				polyNode = polyNode->next;
+			}
+			else if (thisNodeExp < polyNodeExp)
+			{
+				temp.NewTerm(thisNode->item.coef, thisNodeExp);
+				thisNode = thisNode->next;
+			}
+			else if (thisNodeExp > polyNodeExp)
+			{
+				temp.NewTerm(polyNode->item.coef, polyNodeExp);
+				polyNode = polyNode->next;
+			}
+		}
 
 		return temp;
 	}
@@ -48,6 +101,17 @@ public:
 		bool is_first = true; // 더하기 출력시 확인용
 
 		// TODO:
+
+		Node* temp = first_;
+		while (temp)
+		{
+			string exp = temp->item.exp > 0 ? "*x^" + to_string(temp->item.exp) : "";
+			string plus = temp->next ? " + " : "";
+
+			cout << temp->item.coef  << exp << plus;
+
+			temp = temp->next;
+		}
 
 		cout << endl;
 	}
