@@ -46,22 +46,24 @@ int main()
 
 	// Tree traversal methods
 
-	cout << "Preorder" << endl; // 6 2 1 3 5 4
+	cout << "Preorder" << endl; // 6 2 1 3 5 4 // 선출력. center > left > right 순으로 출력
 	tree.Preorder();
 	cout << endl;
 
-	cout << "Inorder" << endl; // 1 3 2 6 5 4
+	cout << "Inorder" << endl; // 1 3 2 6 5 4 // 나중출력. left > center > right 순. 
 	tree.Inorder();
 	cout << endl;
 
-	cout << "Postorder" << endl; // 3 1 2 4 5 6
+	cout << "Postorder" << endl; // 3 1 2 4 5 6 //나중출력. left > right > center 순. 
 	tree.Postorder();
 	cout << endl;
 
-	cout << "LevelOrder" << endl; // 6 2 5 1 4 3
+	cout << "LevelOrder" << endl; // 6 2 5 1 4 3 //레벨순으로 출력
 	tree.LevelOrder();
 	cout << endl;
 
+
+	// 재귀호출 없이 
 	cout << "Iterative Preorder" << endl; // 6 2 1 3 5 4
 	tree.IterPreorder();
 	cout << endl;

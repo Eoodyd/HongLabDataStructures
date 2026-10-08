@@ -71,7 +71,9 @@ public:
 
 	int Sum(Node* node)
 	{
-		return 0; // TODO:
+		//TODO:
+		if (!node) return 0;
+		return node->item + Sum(node->left) + Sum(node->right);
 	}
 
 	int Height()
@@ -81,7 +83,9 @@ public:
 
 	int Height(Node* node)
 	{
-		return 0; // TODO:
+		//TODO:
+		if (!node) return 0;
+		return 1 + std::max(Height(node->left), Height(node->right));
 	}
 
 	~BinaryTree()
@@ -93,7 +97,11 @@ public:
 	{
 		if (node)
 		{
-			// TODO: 힌트 Post-order
+			// TODO: 힌트 Post-order 응용
+			Postorder(node->left);
+			Postorder(node->right);
+			
+			delete node;
 		}
 	}
 
@@ -101,32 +109,54 @@ public:
 	void Preorder(Node* node)
 	{
 		// TODO:
+		if (!node) return;
+		Visit(node);
+
+		Preorder(node->left);
+		Preorder(node->right);
 	};
 
 	void Inorder() { Inorder(root_); }
 	void Inorder(Node* node)
 	{
 		// TODO:
+		if (!node) return;
+
+		Inorder(node->left);
+		Visit(node);
+		Inorder(node->right);
 	}
 
 	void Postorder() { Postorder(root_); }
 	void Postorder(Node* node)
 	{
 		// TODO:
+		if (!node) return;
+
+		Postorder(node->left);
+		Postorder(node->right);
+		Visit(node);
 	}
 
-	void LevelOrder()
+	void LevelOrder() //재귀호출 x
 	{
 		Queue<Node*> q; // 힌트: MyQueue q;
 		Node* current = root_;
 		while (current)
 		{
 			Visit(current);
+			
 			// TODO:
+			if (current->left) q.Enqueue(current->left);
+			if (current->right) q.Enqueue(current->right);
+			if (q.IsEmpty()) return;
+
+			current = q.Front();
+			q.Dequeue();
 		}
 	}
 
-	void IterPreorder()
+	void IterPreorder() // 6 2 1 3 5 4
 	{
 		if (!root_) return;
 
@@ -136,37 +166,69 @@ public:
 		while (!s.IsEmpty())
 		{
 			// TODO:
+			Node* temp = s.Top();
+			s.Pop();
+
+			Visit(temp);
+
+			if (temp->right) s.Push(temp->right);
+			if (temp->left) s.Push(temp->left);
 		}
 	}
 
-	void IterInorder()
+	void IterInorder() // 1 3 2 6 5 4
 	{
 		if (!root_) return;
 
 		Stack<Node*> s;
-
 		Node* current = root_;
+		                         
 		while (current || !s.IsEmpty())
 		{
 			// TODO:
+			while (current)
+			{
+				s.Push(current);
+				current = current->left;
+			}
+			
+			current = s.Top();
+			s.Pop();
+
+			Visit(current);
+			
+			current = current->right;
 		}
 	}
 
-	void IterPostorder()
+	void IterPostorder() // 3 1 2 4 5 6
 	{
 		if (!root_) return;
 
 		Stack<Node*> s1, s2;
 		s1.Push(root_);
-
+		
 		while (!s1.IsEmpty())
 		{
 			// TODO:
+			Node* node = s1.Top();
+
+			s1.Pop();
+
+			s2.Push(node);
+
+			if (node->left) s1.Push(node->left);
+			if (node->right) s1.Push(node->right);
 		}
 
 		while (!s2.IsEmpty())
 		{
 			// TODO:
+			
+			Node* node = s2.Top();
+			s2.Pop();
+
+			Visit(node);
 		}
 	}
 
