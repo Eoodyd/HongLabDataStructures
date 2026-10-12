@@ -68,11 +68,11 @@ int main()
 	tree.IterPreorder();
 	cout << endl;
 
-	cout << "Iterative Inorder" << endl; // 1 3 2 6 5 4
+	cout << "Iterative Inorder" << endl; // 1 3 2 6 5 4 //대원RETRY
 	tree.IterInorder();
 	cout << endl;
 
-	cout << "Iterative Postorder" << endl; // 3 1 2 4 5 6
+	cout << "Iterative Postorder" << endl; // 3 1 2 4 5 6 //대원RETRY
 	tree.IterPostorder();
 	cout << endl;
 

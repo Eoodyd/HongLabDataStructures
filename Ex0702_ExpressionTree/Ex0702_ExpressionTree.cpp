@@ -32,17 +32,48 @@ public:
 	int Evaluate(Node* node)
 	{
 		// TODO: 트리에 저장된 수식의 결과값을 계산
-		return 0;
+
+		if (node->item == '-') return Evaluate(node->left) - Evaluate(node->right);
+		else if (node->item == '+') return Evaluate(node->left) + Evaluate(node->right);
+		else if (node->item == '/') return Evaluate(node->left) / Evaluate(node->right);
+		else if (node->item == '*') return Evaluate(node->left) * Evaluate(node->right);
+
+		return node->item - '0';
 	}
 
 	void Infix() { Infix(root_); cout << endl; }
-	void Infix(Node* node) {
+	void Infix(Node* node) 
+	{
 		// TODO: 수식을 Infix 형식으로 출력 (괄호 포함)
+
+		if (node->item == '-' ||
+			node->item == '+' ||
+			node->item == '*' ||
+			node->item == '/')
+		{
+			cout << '(';
+
+			Infix(node->left);
+			cout << node->item;
+			Infix(node->right);
+
+			cout << ')';
+
+			return;
+		}
+
+		cout << node->item;
 	}
 
 	void Postfix() { Postfix(root_);  cout << endl; }
 	void Postfix(Node* node) {
 		// TODO: 수식을 Postfix 형식으로 출력
+
+		if(node->left)Postfix(node->left);
+		if(node->right)Postfix(node->right);
+		
+		cout << node->item;
+
 	}
 
 	// Infix -> postfix -> expression tree
@@ -63,18 +94,29 @@ public:
 
 		Stack<Node*> s;
 
+		//char[]에 적힌 수식을 트리로 전환
 		while (!postfix.IsEmpty())
 		{
+			//원래 값: 1+(1*2+3)*4 >> postfix: 112*3+4*+
 			char c = postfix.Front();
 			postfix.Dequeue();
 
 			if (c >= '0' && c <= '9')
 			{
-				// TODO:
+				// TODO
+				Node* temp = new Node{c, nullptr, nullptr};
+				s.Push(temp);
 			}
 			else
 			{
 				// TODO:
+				Node* right = s.Top();
+				s.Pop();
+				Node* left = s.Top();
+				s.Pop();
+
+				Node* temp = new Node{ c, left, right };
+				s.Push(temp);
 			}
 		}
 
@@ -135,7 +177,7 @@ int main()
 
 	// Infix -> Postfix -> Expression Tree
 	{
-		// const char infix[] = "1+(1*2+3)*4";
+		//const char infix[] = "1+(1*2+3)*4";
 		const char infix[] = "(5+((3-2)*4))";
 
 		// 생성자에서 문자열로 입력받은 수식을 내부적으로 Infix->Postfix 과정을 거쳐 트리로 저장합니다.
